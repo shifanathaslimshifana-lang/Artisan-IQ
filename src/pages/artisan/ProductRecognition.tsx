@@ -544,20 +544,20 @@ export const ProductRecognition: React.FC = () => {
       {/* Header with Quick Regional Language Switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-orange-600 uppercase tracking-wider">
-            <Scan className="w-4 h-4 text-orange-600" /> {t('Cultural Intelligence & Computer Vision')}
+          <div className="flex items-center gap-2 text-xs font-semibold text-orange-400 uppercase tracking-wider">
+            <Scan className="w-4 h-4 text-orange-400" /> {t('Cultural Intelligence & Computer Vision')}
           </div>
-          <h1 className="text-xl font-bold text-neutral-900 mt-1">
+          <h1 className="text-xl sm:text-2xl font-black text-white mt-1">
             {t('AI Craft Recognition & Visual Intelligence')}
           </h1>
-          <p className="text-xs text-neutral-500 mt-0.5 max-w-2xl">
+          <p className="text-xs text-slate-300 mt-0.5 max-w-2xl">
             {t('Product Recognition Subtitle')}
           </p>
         </div>
 
         {/* Quick Language Selector Bar */}
-        <div className="flex items-center gap-1.5 self-start sm:self-center bg-white p-1 rounded-xl border border-neutral-200 shadow-2xs">
-          <Globe className="w-3.5 h-3.5 text-neutral-400 ml-1.5 shrink-0" />
+        <div className="flex items-center gap-1.5 self-start sm:self-center bg-white/10 p-1 rounded-xl border border-white/15 shadow-2xs backdrop-blur-md">
+          <Globe className="w-3.5 h-3.5 text-teal-400 ml-1.5 shrink-0" />
           <div className="flex items-center gap-1 flex-wrap">
             {REGIONAL_LANGUAGES.map((item) => (
               <button
@@ -567,7 +567,7 @@ export const ProductRecognition: React.FC = () => {
                 className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   language === item.code
                     ? 'bg-orange-600 text-white shadow-xs font-bold'
-                    : 'text-neutral-600 hover:text-black hover:bg-neutral-100'
+                    : 'text-slate-300 hover:text-white hover:bg-white/10'
                 }`}
                 title={`Switch language to ${item.label}`}
               >

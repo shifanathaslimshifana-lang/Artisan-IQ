@@ -60,6 +60,10 @@ interface AppContextType {
   setSelected3DProduct: (product: CraftProduct | null) => void;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (open: boolean) => void;
+  isAuthenticated: boolean;
+  setIsAuthenticated: (auth: boolean) => void;
+  login: (role?: UserRole, customName?: string) => void;
+  logout: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -86,6 +90,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return 'artisan';
   });
 
+  // Authentication state - always defaults to false on load so the user experiences the Login page immediately
+  const [isAuthenticated, setIsAuthenticatedState] = useState<boolean>(false);
+
+  const setIsAuthenticated = (auth: boolean) => {
+    setIsAuthenticatedState(auth);
+    try {
+      sessionStorage.setItem('artisan_ai_auth', String(auth));
+    } catch {
+      // ignore
+    }
+  };
+
   const [activeScreen, setActiveScreenState] = useState<string>(() => {
     try {
       const savedScreen = sessionStorage.getItem('artisan_ai_screen');
@@ -93,7 +109,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     } catch {
       // ignore
     }
-    return ROLE_DEFAULT_SCREENS['artisan'];
+    return 'artisan-overview';
   });
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -331,6 +347,28 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     showToast('success', 'Feedback Stored', 'Your practical experience will refine future cluster recommendations.');
   };
 
+  const login = (role?: UserRole, customName?: string) => {
+    const selectedRole = role || currentRole;
+    if (role) {
+      setCurrentRole(role);
+    }
+    const targetScreen = ROLE_DEFAULT_SCREENS[selectedRole] || 'artisan-overview';
+    setActiveScreen(targetScreen);
+    setIsAuthenticated(true);
+    const userName = customName || DEMO_USERS[selectedRole]?.name || 'Artisan User';
+    showToast(
+      'success',
+      'Welcome Back to ArtisanIQ!',
+      `Logged in as ${userName}. Your craft journey starts here.`
+    );
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setActiveScreen('login');
+    showToast('info', 'Signed Out', 'You have securely signed out of ArtisanIQ.');
+  };
+
   const currentUser = DEMO_USERS[currentRole] || DEMO_USERS.artisan;
 
   return (
@@ -369,6 +407,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setSelected3DProduct,
         isMobileMenuOpen,
         setIsMobileMenuOpen,
+        isAuthenticated,
+        setIsAuthenticated,
+        login,
+        logout,
       }}
     >
       {children}

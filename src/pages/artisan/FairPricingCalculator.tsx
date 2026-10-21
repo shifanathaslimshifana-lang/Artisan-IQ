@@ -168,13 +168,13 @@ export const FairPricingCalculator: React.FC = () => {
     <div className="space-y-6 max-w-5xl">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-xs font-semibold text-orange-600 uppercase tracking-wider">
-          <Calculator className="w-4 h-4" /> Living Wage & Transparent Cost-Based Pricing
+        <div className="flex items-center gap-2 text-xs font-semibold text-orange-400 uppercase tracking-wider">
+          <Calculator className="w-4 h-4 text-orange-400" /> Living Wage & Transparent Cost-Based Pricing
         </div>
-        <h1 className="text-xl font-bold text-neutral-900 mt-1">
+        <h1 className="text-xl sm:text-2xl font-black text-white mt-1">
           Artisan Cost-Based Pricing Intelligence & Fair Margin System
         </h1>
-        <p className="text-xs text-neutral-500 mt-0.5">
+        <p className="text-xs text-slate-300 mt-0.5">
           Eliminates unsupported guesses. Every price is mathematically grounded in your verified material costs, living artisan wages, and transparent profit margins.
         </p>
       </div>

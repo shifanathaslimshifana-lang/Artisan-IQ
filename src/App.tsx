@@ -4,6 +4,7 @@ import { Header } from './components/layout/Header';
 import { Sidebar } from './components/layout/Sidebar';
 import { DemoLoginModal } from './components/shared/DemoLoginModal';
 import { ToastContainer } from './components/shared/ToastContainer';
+import { LoginPage } from './pages/auth/LoginPage';
 
 // Artisan Pages
 import { ArtisanOverview } from './pages/artisan/ArtisanOverview';
@@ -136,8 +137,10 @@ const ScreenRenderer: React.FC = () => {
   }
 };
 
+import { GlassmorphismBackground } from './components/layout/GlassmorphismBackground';
+
 function MainLayout() {
-  const { currentRole, setIsDemoLoginOpen, t, language, setLanguage } = useApp();
+  const { currentRole, setIsDemoLoginOpen, t, language, setLanguage, activeScreen } = useApp();
 
   const navLanguages: { code: any; label: string }[] = [
     { code: 'en', label: 'English' },
@@ -148,25 +151,39 @@ function MainLayout() {
     { code: 'ml', label: 'മലയാളം' },
   ];
 
+  // Requirement 9: Use elaborate background mainly on landing page & dashboard,
+  // and simplified darker variation on AI scanner, product listing, and pricing screens.
+  const isFocusedDarkScreen = [
+    'artisan-recognition',
+    'artisan-pricing',
+    'artisan-products',
+    'artisan-materials',
+  ].includes(activeScreen);
+
+  const backgroundVariant = isFocusedDarkScreen ? 'focused-dark' : 'elaborate';
+
   return (
-    <div className="min-h-screen bg-white text-[#121212] flex flex-col antialiased w-full overflow-x-hidden">
+    <div className="relative min-h-screen bg-transparent text-slate-100 flex flex-col antialiased w-full overflow-x-hidden">
+      {/* Dynamic Cinematic Glassmorphism Background */}
+      <GlassmorphismBackground variant={backgroundVariant} />
+
       <Header />
 
-      {/* Hackathon Evaluation Mode Banner - High-contrast Black & Orange */}
-      <div className="bg-neutral-950 border-b border-black px-3 sm:px-6 py-2 text-xs flex flex-wrap items-center justify-between gap-2.5 w-full text-white">
+      {/* Evaluation / Workspace Persona Banner */}
+      <div className="bg-[#070C24]/80 border-b border-white/10 px-3 sm:px-6 py-2 text-xs flex flex-wrap items-center justify-between gap-2.5 w-full text-slate-200 backdrop-blur-md z-30">
         <div className="flex items-center gap-2 font-medium text-[11px] sm:text-xs">
-          <span className="w-2 h-2 rounded-full bg-orange-500 shrink-0" />
+          <span className="w-2 h-2 rounded-full bg-orange-500 shrink-0 shadow-[0_0_8px_#ea580c]" />
           <span>
-            <strong className="text-neutral-200">{t('Hackathon Judging Mode:')}</strong> {t('You are viewing workspace as')}{' '}
-            <span className="capitalize font-bold text-orange-400 underline decoration-orange-500">
+            <strong className="text-white font-semibold">{t('Active Workspace:')}</strong> {t('You are exploring as')}{' '}
+            <span className="capitalize font-bold text-orange-400 underline decoration-orange-500/70">
               {currentRole}
-            </span>. {t('State persists in browser session.')}
+            </span>. {t('State persists in session.')}
           </span>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
           {/* Quick 1-Click Language Switcher Bar */}
-          <div className="flex items-center gap-1 bg-neutral-900 border border-neutral-800 rounded-lg p-0.5">
+          <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-lg p-0.5 backdrop-blur-md">
             {navLanguages.map((l) => (
               <button
                 key={l.code}
@@ -175,7 +192,7 @@ function MainLayout() {
                 className={`px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-semibold transition-colors cursor-pointer ${
                   language === l.code
                     ? 'bg-orange-600 text-white font-bold shadow-xs'
-                    : 'text-neutral-300 hover:text-white hover:bg-neutral-800'
+                    : 'text-slate-300 hover:text-white hover:bg-white/10'
                 }`}
                 title={`Switch interface language to ${l.label}`}
               >
@@ -186,14 +203,14 @@ function MainLayout() {
 
           <button
             onClick={() => setIsDemoLoginOpen(true)}
-            className="text-[11px] sm:text-xs bg-orange-600 hover:bg-orange-500 text-white font-semibold px-2.5 sm:px-3 py-1 rounded-md transition-colors shadow-xs w-full sm:w-auto text-center shrink-0 cursor-pointer"
+            className="text-[11px] sm:text-xs bg-gradient-to-r from-orange-600 to-rose-600 hover:from-orange-500 hover:to-rose-500 text-white font-semibold px-2.5 sm:px-3 py-1 rounded-md transition-all shadow-xs border border-white/15 w-full sm:w-auto text-center shrink-0 cursor-pointer"
           >
             {t('Switch Role / View Other Workspaces')}
           </button>
         </div>
       </div>
 
-      <div className="flex-1 flex w-full min-w-0 overflow-x-hidden">
+      <div className="flex-1 flex w-full min-w-0 overflow-x-hidden relative z-10">
         <Sidebar />
         <main className="flex-1 min-w-0 w-full p-3.5 sm:p-5 md:p-8 overflow-y-auto overflow-x-hidden">
           <div className="w-full max-w-7xl mx-auto min-w-0">
@@ -208,10 +225,25 @@ function MainLayout() {
   );
 }
 
+function AppContent() {
+  const { isAuthenticated, activeScreen } = useApp();
+
+  if (!isAuthenticated || activeScreen === 'login') {
+    return (
+      <div className="relative min-h-screen w-full bg-[#050819] text-white">
+        <LoginPage />
+        <ToastContainer />
+      </div>
+    );
+  }
+
+  return <MainLayout />;
+}
+
 export default function App() {
   return (
     <AppProvider>
-      <MainLayout />
+      <AppContent />
     </AppProvider>
   );
 }

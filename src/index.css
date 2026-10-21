@@ -2,22 +2,273 @@
 
 :root {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #FFFFFF;
-  color: #0F0F0F;
+  background-color: #040718;
+  color: #F8FAFC;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
 }
 
 ::selection {
-  background-color: #ea580c;
+  background-color: #f43f5e;
   color: #ffffff;
 }
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
+
+/* Iridescent Liquid-Glass Tokens (Reference Image Aesthetic) */
+.glass-liquid-panel {
+  background: linear-gradient(135deg, rgba(14, 22, 60, 0.72) 0%, rgba(8, 13, 38, 0.82) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 0 25px 0 rgba(56, 189, 248, 0.08),
+    0 16px 45px -8px rgba(0, 0, 0, 0.65),
+    0 0 30px -10px rgba(139, 92, 246, 0.2);
+}
+
+.glass-liquid-card {
+  background: linear-gradient(135deg, rgba(13, 20, 52, 0.68) 0%, rgba(7, 12, 34, 0.78) 100%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 20px 0 rgba(244, 63, 94, 0.05),
+    0 12px 32px -4px rgba(0, 0, 0, 0.55);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-liquid-card:hover {
+  background: linear-gradient(135deg, rgba(18, 28, 72, 0.8) 0%, rgba(10, 16, 44, 0.88) 100%);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.45),
+    0 18px 45px -6px rgba(0, 0, 0, 0.7),
+    0 0 25px 0 rgba(56, 189, 248, 0.25),
+    0 0 20px 0 rgba(244, 63, 94, 0.15);
+}
+
+/* Subtle Holographic / Prismatic Border Accent */
+.holographic-border {
+  position: relative;
+}
+.holographic-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.6), rgba(168, 85, 247, 0.5), rgba(244, 63, 94, 0.6), rgba(45, 212, 191, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Floating Animations */
+@keyframes liquidFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1.5deg);
+  }
+}
+
+@keyframes liquidPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+.animate-liquid-float {
+  animation: liquidFloat 8s ease-in-out infinite;
+}
+
+.animate-liquid-pulse {
+  animation: liquidPulse 6s ease-in-out infinite;
+}
+
+/* Iridescent Liquid-Glass Ribbon Border Animation (Reference Image 2) */
+@keyframes liquidRibbonFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes liquidRibbonHalo {
+  0%, 100% {
+    opacity: 0.65;
+    filter: blur(6px);
+  }
+  50% {
+    opacity: 0.92;
+    filter: blur(9px);
+  }
+}
+
+/* Reference Image 2: Flowing, Iridescent Liquid-Glass Ribbon Border for Login Card */
+.login-glass-card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(11, 18, 52, 0.66) 0%, rgba(7, 11, 35, 0.8) 100%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-radius: 28px;
+  /* Realistic liquid-glass inner caustics & multi-spectrum neon aura matching flowing ribbons */
+  box-shadow: 
+    0 0 32px -4px rgba(56, 189, 248, 0.38),
+    0 0 45px -5px rgba(168, 85, 247, 0.35),
+    0 0 55px 0 rgba(244, 114, 182, 0.22),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 25px 0 rgba(147, 51, 234, 0.18),
+    inset -1px 2px 20px 0 rgba(244, 114, 182, 0.16),
+    inset 1px -2px 20px 0 rgba(56, 189, 248, 0.18),
+    0 25px 60px -15px rgba(0, 0, 0, 0.85);
+  transition: all 0.3s ease;
+}
+
+/* Sharp Flowing Iridescent Liquid-Glass Specular Ribbon Edge */
+.login-glass-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 30px;
+  padding: 2px;
+  background: linear-gradient(
+    125deg,
+    #FFFFFF 0%,
+    #38BDF8 14%,
+    #818CF8 30%,
+    #C084FC 48%,
+    #F472B6 66%,
+    #FB7185 82%,
+    #38BDF8 94%,
+    #FFFFFF 100%
+  );
+  background-size: 250% 250%;
+  animation: liquidRibbonFlow 10s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.98;
+}
+
+/* Soft Diffuse Liquid-Glass Ribbon Neon Halo */
+.login-glass-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 30px;
+  padding: 2px;
+  background: linear-gradient(
+    125deg,
+    #38BDF8 0%,
+    #818CF8 25%,
+    #C084FC 50%,
+    #F472B6 75%,
+    #38BDF8 100%
+  );
+  background-size: 250% 250%;
+  animation: liquidRibbonFlow 10s ease-in-out infinite, liquidRibbonHalo 6s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.75;
+  filter: blur(6px);
+}
+
+@media (max-width: 640px) {
+  .login-glass-card {
+    border-radius: 22px;
+  }
+  .login-glass-card::before,
+  .login-glass-card::after {
+    border-radius: 24px;
+  }
+}
+
+/* Radiant Violet to Electric-Cyan Gradient Button from Reference Image */
+.login-gradient-btn {
+  background: linear-gradient(90deg, #A855F7 0%, #9333EA 25%, #3B82F6 70%, #06B6D4 95%, #22D3EE 100%);
+  box-shadow: 
+    0 0 28px 0 rgba(168, 85, 247, 0.55),
+    0 0 25px 0 rgba(6, 182, 212, 0.5),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-gradient-btn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1.5px);
+  box-shadow: 
+    0 0 38px 0 rgba(168, 85, 247, 0.75),
+    0 0 32px 0 rgba(6, 182, 212, 0.7),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.75);
+}
+
+.login-gradient-btn:active {
+  transform: translateY(0.5px);
+  filter: brightness(0.98);
+}
+
+/* Glass Input with subtle cyan rim glow */
+.login-glass-input {
+  background: rgba(9, 15, 42, 0.58);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 14px;
+  transition: all 0.25s ease;
+}
+
+.login-glass-input:focus-within {
+  border-color: #38BDF8;
+  background: rgba(12, 20, 54, 0.75);
+  box-shadow: 
+    0 0 20px 0 rgba(56, 189, 248, 0.35),
+    inset 0 0 12px 0 rgba(56, 189, 248, 0.12);
+}
+
+/* Custom dark glass scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(4, 7, 24, 0.7);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.5);
+}
+
+
+

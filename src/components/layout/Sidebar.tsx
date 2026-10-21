@@ -37,6 +37,7 @@ import {
   SlidersHorizontal,
   X,
   Globe,
+  LogOut,
 } from 'lucide-react';
 import { LanguageCode } from '../../types';
 
@@ -58,6 +59,7 @@ export const Sidebar: React.FC = () => {
     t,
     language,
     setLanguage,
+    logout,
   } = useApp();
 
   const languages: { code: LanguageCode; shortLabel: string; label: string }[] = [
@@ -152,39 +154,39 @@ export const Sidebar: React.FC = () => {
       {/* Active Workspace Navigation */}
       <div>
         <div className="flex items-center justify-between px-3 mb-1.5">
-          <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
             {t(currentWorkspace.title)}
           </span>
-          <span className="text-[10px] text-neutral-400 font-mono">
+          <span className="text-[10px] text-slate-400 font-mono">
             {currentWorkspace.items.length} views
           </span>
         </div>
 
-        <div className="space-y-0.5">
+        <div className="space-y-1">
           {currentWorkspace.items.map((item) => {
             const isActive = activeScreen === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => handleSelectScreen(item.id)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all text-left ${
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all text-left cursor-pointer ${
                   isActive
-                    ? 'bg-black text-white shadow-xs font-semibold'
-                    : 'text-neutral-700 hover:bg-neutral-100 hover:text-black'
+                    ? 'bg-gradient-to-r from-orange-500/30 via-violet-600/25 to-teal-500/15 text-white border border-orange-500/40 shadow-[0_0_15px_rgba(234,88,12,0.2)] font-semibold backdrop-blur-md'
+                    : 'text-slate-300 hover:bg-white/10 hover:text-white border border-transparent'
                 }`}
               >
                 <div className="flex items-center gap-2.5 truncate">
-                  <span className={isActive ? 'text-orange-400' : 'text-neutral-500'}>
+                  <span className={isActive ? 'text-orange-400 drop-shadow-[0_0_6px_#f97316]' : 'text-slate-400'}>
                     {item.icon}
                   </span>
                   <span className="truncate">{t(item.label)}</span>
                 </div>
                 {item.badge && (
                   <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded font-semibold whitespace-nowrap ml-1 ${
+                    className={`text-[9px] px-1.5 py-0.5 rounded font-bold whitespace-nowrap ml-1 ${
                       isActive
-                        ? 'bg-orange-600 text-white'
-                        : 'bg-orange-100 text-orange-800'
+                        ? 'bg-orange-500 text-white shadow-xs'
+                        : 'bg-white/10 text-orange-300 border border-orange-500/30'
                     }`}
                   >
                     {item.badge}
@@ -197,57 +199,57 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Quick Cross-Workspace Jump Tabs */}
-      <div className="pt-3 border-t border-neutral-100">
-        <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider px-3 block mb-2">
+      <div className="pt-3 border-t border-white/10">
+        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-2">
           {t('Explore All Workspaces')}
         </span>
         <div className="grid grid-cols-2 gap-1.5 px-1">
           <button
             onClick={() => handleSelectScreen('artisan-overview')}
-            className={`p-2 rounded text-[11px] text-left border transition-colors ${
+            className={`p-2 rounded-lg text-[11px] text-left border transition-all cursor-pointer ${
               currentRole === 'artisan'
-                ? 'border-black bg-black text-white font-semibold'
-                : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                ? 'border-orange-500 bg-orange-500/20 text-white font-bold shadow-[0_0_10px_rgba(234,88,12,0.2)]'
+                : 'border-white/10 hover:bg-white/10 text-slate-300'
             }`}
           >
             Artisan (20)
           </button>
           <button
             onClick={() => handleSelectScreen('supplier-dashboard')}
-            className={`p-2 rounded text-[11px] text-left border transition-colors ${
+            className={`p-2 rounded-lg text-[11px] text-left border transition-all cursor-pointer ${
               currentRole === 'supplier'
-                ? 'border-black bg-black text-white font-semibold'
-                : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                ? 'border-orange-500 bg-orange-500/20 text-white font-bold shadow-[0_0_10px_rgba(234,88,12,0.2)]'
+                : 'border-white/10 hover:bg-white/10 text-slate-300'
             }`}
           >
             Supplier (5)
           </button>
           <button
             onClick={() => handleSelectScreen('buyer-marketplace')}
-            className={`p-2 rounded text-[11px] text-left border transition-colors ${
+            className={`p-2 rounded-lg text-[11px] text-left border transition-all cursor-pointer ${
               currentRole === 'buyer'
-                ? 'border-black bg-black text-white font-semibold'
-                : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                ? 'border-orange-500 bg-orange-500/20 text-white font-bold shadow-[0_0_10px_rgba(234,88,12,0.2)]'
+                : 'border-white/10 hover:bg-white/10 text-slate-300'
             }`}
           >
             Buyer (6)
           </button>
           <button
             onClick={() => handleSelectScreen('delivery-dashboard')}
-            className={`p-2 rounded text-[11px] text-left border transition-colors ${
+            className={`p-2 rounded-lg text-[11px] text-left border transition-all cursor-pointer ${
               currentRole === 'delivery'
-                ? 'border-black bg-black text-white font-semibold'
-                : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                ? 'border-orange-500 bg-orange-500/20 text-white font-bold shadow-[0_0_10px_rgba(234,88,12,0.2)]'
+                : 'border-white/10 hover:bg-white/10 text-slate-300'
             }`}
           >
             Delivery (3)
           </button>
           <button
             onClick={() => handleSelectScreen('admin-overview')}
-            className={`col-span-2 p-2 rounded text-[11px] text-left border transition-colors ${
+            className={`col-span-2 p-2 rounded-lg text-[11px] text-left border transition-all cursor-pointer ${
               currentRole === 'admin'
-                ? 'border-black bg-black text-white font-semibold'
-                : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                ? 'border-orange-500 bg-orange-500/20 text-white font-bold shadow-[0_0_10px_rgba(234,88,12,0.2)]'
+                : 'border-white/10 hover:bg-white/10 text-slate-300'
             }`}
           >
             National Council Admin (6)
@@ -258,64 +260,81 @@ export const Sidebar: React.FC = () => {
   );
 
   const bottomCard = (
-    <div className="p-3 border-t border-neutral-200 bg-white">
+    <div className="p-3 border-t border-white/10 bg-[#070C24]/80 backdrop-blur-md space-y-2">
       <button
         onClick={() => {
           setIsDemoLoginOpen(true);
           setIsMobileMenuOpen(false);
         }}
-        className="w-full p-2.5 bg-white border border-neutral-200 rounded-xl hover:border-black hover:shadow-xs transition-all flex items-center justify-between group cursor-pointer"
+        className="w-full p-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/25 transition-all flex items-center justify-between group cursor-pointer"
       >
         <div className="flex items-center gap-2 min-w-0">
-          <div className="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0" />
+          <div className="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0 shadow-[0_0_8px_#ea580c]" />
           <div className="text-left truncate">
-            <div className="text-[11px] font-bold text-neutral-900 capitalize truncate">
+            <div className="text-[11px] font-bold text-white capitalize truncate">
               {t('Role')}: {currentRole}
             </div>
-            <div className="text-[10px] text-neutral-500 truncate">
+            <div className="text-[10px] text-slate-400 truncate">
               {t('Click to switch persona')}
             </div>
           </div>
         </div>
-        <SlidersHorizontal className="w-4 h-4 text-neutral-400 group-hover:text-orange-600 shrink-0" />
+        <SlidersHorizontal className="w-4 h-4 text-slate-400 group-hover:text-orange-400 shrink-0 transition-colors" />
+      </button>
+
+      <button
+        onClick={() => {
+          logout();
+          setIsMobileMenuOpen(false);
+        }}
+        className="w-full py-1.5 px-2 bg-white/5 hover:bg-rose-500/20 text-slate-300 hover:text-rose-300 rounded-lg text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors border border-white/10 hover:border-rose-500/30 cursor-pointer"
+      >
+        <LogOut className="w-3.5 h-3.5 text-rose-400" />
+        <span>{t('Sign Out / Login Screen')}</span>
       </button>
     </div>
   );
 
   return (
     <>
-      {/* Desktop Permanent Sidebar (Hidden on mobile <768px, visible on md+) */}
-      <aside className="hidden md:flex w-64 shrink-0 bg-white border-r border-neutral-200 flex-col justify-between h-[calc(100vh-61px)] sticky top-[61px] select-none">
+      {/* Desktop Permanent Sidebar */}
+      <aside className="hidden md:flex w-64 shrink-0 bg-[#070C24]/75 backdrop-blur-md border-r border-white/10 flex-col justify-between h-[calc(100vh-61px)] sticky top-[61px] select-none text-slate-200">
         {navigationContent}
         {bottomCard}
       </aside>
 
-      {/* Mobile Slide-Out Drawer & Backdrop (Rendered only on <md) */}
+      {/* Mobile Slide-Out Drawer & Backdrop */}
       {isMobileMenuOpen && (
         <div className="md:hidden">
-          {/* Dark semi-transparent backdrop */}
           <div
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+            className="fixed inset-0 z-40 bg-black/70 backdrop-blur-xs animate-in fade-in duration-200"
             aria-hidden="true"
           />
 
-          {/* Slide-out Drawer */}
           <aside
-            className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-white shadow-2xl flex flex-col justify-between animate-in slide-in-from-left duration-250 select-none border-r border-neutral-200"
+            className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-[#070C24]/95 backdrop-blur-xl shadow-2xl flex flex-col justify-between animate-in slide-in-from-left duration-250 select-none border-r border-white/15 text-slate-200"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation Drawer"
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200 bg-white">
+            <div className="flex items-center justify-between px-4 py-3.5 border-b border-white/10 bg-[#070C24]">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-orange-500" />
-                <span className="text-sm font-bold text-neutral-900">{t('ArtisanAI')}</span>
+                <svg className="w-6 h-6 shrink-0" viewBox="0 0 48 48" fill="none">
+                  <path
+                    d="M 12 37 L 24 10 L 36 37"
+                    stroke="url(#artisanRefLogoGrad)"
+                    strokeWidth="7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span className="text-sm font-bold text-white">ArtisanIQ</span>
               </div>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="p-1 text-neutral-500 hover:text-neutral-900 rounded-md transition-colors cursor-pointer"
+                className="p-1.5 text-slate-400 hover:text-white rounded-md transition-colors cursor-pointer"
                 aria-label="Close menu"
               >
                 <X className="w-5 h-5" />
@@ -323,9 +342,9 @@ export const Sidebar: React.FC = () => {
             </div>
 
             {/* Mobile Drawer Language Selector */}
-            <div className="px-4 py-3 bg-neutral-50 border-b border-neutral-200">
-              <div className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-orange-600" />
+            <div className="px-4 py-3 bg-white/5 border-b border-white/10">
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Globe className="w-3.5 h-3.5 text-teal-400" />
                 <span>{t('Select Language')}</span>
               </div>
               <div className="grid grid-cols-3 gap-1.5">
@@ -335,8 +354,8 @@ export const Sidebar: React.FC = () => {
                     onClick={() => setLanguage(l.code)}
                     className={`py-1.5 px-2 rounded-lg text-xs font-semibold text-center border transition-all cursor-pointer ${
                       language === l.code
-                        ? 'bg-black text-white border-black shadow-xs font-bold'
-                        : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-100'
+                        ? 'bg-orange-500/20 text-orange-400 border-orange-500 font-bold shadow-xs'
+                        : 'bg-white/5 text-slate-300 border-white/10 hover:bg-white/10'
                     }`}
                   >
                     {l.label}
