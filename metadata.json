@@ -1,0 +1,6 @@
+{
+  "name": "ArtisanAI - Artisan-to-Market Intelligence Platform",
+  "description": "AI-Powered Artisan-to-Market Intelligence Platform connecting traditional artisans, raw material suppliers, buyers, and delivery partners with fair pricing, demand intelligence, and 3D heritage studio.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
