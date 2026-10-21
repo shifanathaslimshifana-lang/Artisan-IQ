@@ -323,6 +323,7 @@ export const LoginPage: React.FC = () => {
           </form>
         </div>
       </div>
+    </div>
 
       {/* Forgot Password Modal */}
       {isForgotPasswordOpen && (
